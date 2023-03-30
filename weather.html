@@ -17,8 +17,20 @@
 </nav>
 <main>
   <button id="btn-connect" onclick="connect()" disabled>Connect</button>
-  <button id="btn-requestData" onclick="requestData()" disabled>Request Data</button>
+  <button id="btn-request-data" onclick="requestData()" disabled>Request Data</button>
   <button id="btn-disconnect" onclick="disconnect()" disabled>Disconnect</button>
+  <div><span id="air-pressure"></span> hPa</div>
+  <div><span id="illumination"></span> lux</div>
+  <div><span id="inside-humidity"></span> %</div>
+  <div><span id="outside-humidity"></span> %</div>
+  <div><span id="inside-temperature"></span> °C</div>
+  <div><span id="outside-temperature"></span> °C</div>
+  <div><span id="rain"></span> mm</div>
+  <div><span id="uv-level"></span></div>
+  <div><span id="wind-direction-compass"></span></div>
+  <div><span id="wind-direction-degrees"></span> °</div>
+  <div><span id="wind-speed"></span> km/h</div>
+  <div><span id="wind-gust"></span> km/h</div>
 </main>
 <script src="weather.js"></script>
 </body>

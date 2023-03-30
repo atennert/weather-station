@@ -118,7 +118,7 @@ class WeatherStation {
  * illuminationLux: number,
  * uvLevel: number,
  * windGustKilometersPerHour: number,
- * windDirectionGrad: number,
+ * windDirectionDegrees: number,
  * insideHumidityPercent: number,
  * airPressureHectoPascal: number,
  * insideTemperatureCelsius: number,
@@ -139,13 +139,45 @@ function interpretWeatherData(data) {
     outsideHumidityPercent: data[0x04],
     windSpeedKilometersPerHour: data[0x09] / 10 * 3.6,
     windGustKilometersPerHour: data[0x0A] / 10 * 3.6,
-    windDirectionGrad: directionsDeg[data[0x0C] < directionsDeg.length ? data[0x0C] : 0],
+    windDirectionDegrees: directionsDeg[data[0x0C] < directionsDeg.length ? data[0x0C] : 0],
     windDirectionCompass: directions[data[0x0C] < directions.length ? data[0x0C] : 0],
     airPressureHectoPascal: (data[0x07] + (data[0x08] << 8)) / 10,
     rainMillimeter: (data[0x0D] + (data[0x0E] << 8)) * 0.3,
     uvLevel: data[19],
     illuminationLux: Math.floor((data[16] + (data[17] << 8) + (data[18] << 16)) * 0.1)
   }
+}
+
+/**
+ * @param {{
+ * windDirectionCompass: string,
+ * outsideTemperatureCelsius: number,
+ * outsideHumidityPercent: number,
+ * windSpeedKilometersPerHour: number,
+ * illuminationLux: number,
+ * uvLevel: number,
+ * windGustKilometersPerHour: number,
+ * windDirectionDegrees: number,
+ * insideHumidityPercent: number,
+ * airPressureHectoPascal: number,
+ * insideTemperatureCelsius: number,
+ * age: number,
+ * rainMillimeter: number
+ * }} weatherData
+ */
+function updateUI(weatherData) {
+  document.getElementById('air-pressure').textContent = weatherData.airPressureHectoPascal
+  document.getElementById('illumination').textContent = weatherData.illuminationLux
+  document.getElementById('inside-humidity').textContent = weatherData.insideHumidityPercent
+  document.getElementById('outside-humidity').textContent = weatherData.outsideHumidityPercent
+  document.getElementById('inside-temperature').textContent = weatherData.insideTemperatureCelsius
+  document.getElementById('outside-temperature').textContent = weatherData.outsideTemperatureCelsius
+  document.getElementById('rain').textContent = weatherData.rainMillimeter
+  document.getElementById('uv-level').textContent = weatherData.uvLevel
+  document.getElementById('wind-direction-compass').textContent = weatherData.windDirectionCompass
+  document.getElementById('wind-direction-degrees').textContent = weatherData.windDirectionDegrees
+  document.getElementById('wind-speed').textContent = weatherData.windSpeedKilometersPerHour
+  document.getElementById('wind-gust').textContent = weatherData.windGustKilometersPerHour
 }
 
 /** @type WeatherStation */
@@ -169,7 +201,7 @@ async function open(device) {
 
   weatherStation = new WeatherStation(device)
 
-  document.getElementById('btn-requestData').disabled = false
+  document.getElementById('btn-request-data').disabled = false
   document.getElementById('btn-disconnect').disabled = false
 }
 
@@ -193,7 +225,7 @@ async function requestData() {
   const currentDataAddress = await weatherStation.readData(WS_CURRENT_POSITION_ADDRESS, 2)
   const data2 = await weatherStation.readData(currentDataAddress[0] + currentDataAddress[1] * 256, 0x14)
 
-  console.log('data', interpretWeatherData(data2))
+  updateUI(interpretWeatherData(data2))
 }
 
 async function disconnect() {
@@ -201,7 +233,7 @@ async function disconnect() {
   weatherStation = undefined
 
   document.getElementById('btn-connect').disabled = false
-  document.getElementById('btn-requestData').disabled = true
+  document.getElementById('btn-request-data').disabled = true
   document.getElementById('btn-disconnect').disabled = true
 }
 
