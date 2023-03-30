@@ -203,6 +203,7 @@ async function open(device) {
 
   document.getElementById('btn-request-data').disabled = false
   document.getElementById('btn-disconnect').disabled = false
+  document.getElementById('chk-auto-refresh').disabled = false
 }
 
 async function connect() {
@@ -228,6 +229,18 @@ async function requestData() {
   updateUI(interpretWeatherData(data2))
 }
 
+/** @type number */
+let refreshInterval
+
+async function changeAutoRefresh() {
+  if (document.getElementById('chk-auto-refresh').checked) {
+    await requestData()
+    refreshInterval = setInterval(() => requestData(), 30_000)
+  } else {
+    clearInterval(refreshInterval)
+  }
+}
+
 async function disconnect() {
   await weatherStation.close()
   weatherStation = undefined
@@ -235,6 +248,7 @@ async function disconnect() {
   document.getElementById('btn-connect').disabled = false
   document.getElementById('btn-request-data').disabled = true
   document.getElementById('btn-disconnect').disabled = true
+  document.getElementById('chk-auto-refresh').disabled = true
 }
 
 navigator.hid.getDevices()

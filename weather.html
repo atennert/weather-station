@@ -19,6 +19,9 @@
   <button id="btn-connect" onclick="connect()" disabled>Connect</button>
   <button id="btn-request-data" onclick="requestData()" disabled>Request Data</button>
   <button id="btn-disconnect" onclick="disconnect()" disabled>Disconnect</button>
+  <div>
+    <input type="checkbox" id="chk-auto-refresh" onchange="changeAutoRefresh()" disabled> auto refresh (30s)
+  </div>
   <div><span id="air-pressure"></span> hPa</div>
   <div><span id="illumination"></span> lux</div>
   <div><span id="inside-humidity"></span> %</div>
