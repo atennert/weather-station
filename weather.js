@@ -45,7 +45,7 @@ class WeatherStation {
     /** @type Array<number> */
     const completeBuffer = []
 
-    for (let i=0; i<size; i+=readSize) {
+    for (let i = 0; i < size; i += readSize) {
       const data = await this.readDataPart(address + i, readSize);
 
       completeBuffer.push(...data)
@@ -110,35 +110,72 @@ class WeatherStation {
 
 /**
  * @param {Array<number>} data
- * @return {{outsideTemperature: string, absolutePressure: string, uvLevel: *, rain: string, illumination: string, insideTemperature: string, windGust: string, outsideHumidity: string, windDirection: string, insideHumidity: string, windSpeed: string, age: *}}
+ * @return {{
+ * windDirectionCompass: string,
+ * outsideTemperatureCelsius: number,
+ * outsideHumidityPercent: number,
+ * windSpeedKilometersPerHour: number,
+ * illuminationLux: number,
+ * uvLevel: number,
+ * windGustKilometersPerHour: number,
+ * windDirectionGrad: number,
+ * insideHumidityPercent: number,
+ * airPressureHectoPascal: number,
+ * insideTemperatureCelsius: number,
+ * age: number,
+ * rainMillimeter: number
+ * }}
  */
 function interpretWeatherData(data) {
   return {
     age: data[0],
-    insideTemperature: (data[0x03] >= 0x80
+    insideTemperatureCelsius: data[0x03] >= 0x80
       ? (data[0x02] + (data[0x03] << 8) ^ 0x7FFF) / 10
-      : (data[0x02] + (data[0x03] << 8) ^ 0x0000) / 10) + ' °C',
-    outsideTemperature: (data[0x06] >= 0x80
+      : (data[0x02] + (data[0x03] << 8) ^ 0x0000) / 10,
+    outsideTemperatureCelsius: data[0x06] >= 0x80
       ? (data[0x05] + (data[0x06] << 8) ^ 0x7FFF) / 10
-      : (data[0x05] + (data[0x06] << 8) ^ 0x0000) / 10) + ' °C',
-    insideHumidity: data[0x01] + ' %',
-    outsideHumidity: data[0x04] + ' %',
-    windSpeed: (data[0x09] / 10 * 3.6) + ' km/h',
-    windGust: (data[0x0A] / 10 * 3.6) + ' km/h',
-    windDirection: directionsDeg[data[0x0C] < directionsDeg.length ? data[0x0C] : 0] + '° (' + directions[data[0x0C] < directions.length ? data[0x0C] : 0] + ')',
-    absolutePressure: ((data[0x07] + (data[0x08] << 8)) / 10) + " hPa",
-    rain: ((data[0x0D] + (data[0x0E] << 8)) * 0.3) + " mm",
+      : (data[0x05] + (data[0x06] << 8) ^ 0x0000) / 10,
+    insideHumidityPercent: data[0x01],
+    outsideHumidityPercent: data[0x04],
+    windSpeedKilometersPerHour: data[0x09] / 10 * 3.6,
+    windGustKilometersPerHour: data[0x0A] / 10 * 3.6,
+    windDirectionGrad: directionsDeg[data[0x0C] < directionsDeg.length ? data[0x0C] : 0],
+    windDirectionCompass: directions[data[0x0C] < directions.length ? data[0x0C] : 0],
+    airPressureHectoPascal: (data[0x07] + (data[0x08] << 8)) / 10,
+    rainMillimeter: (data[0x0D] + (data[0x0E] << 8)) * 0.3,
     uvLevel: data[19],
-    illumination: Math.floor((data[16] + (data[17] << 8) + ( data[18] << 16)) * 0.1) + " lux"
+    illuminationLux: Math.floor((data[16] + (data[17] << 8) + (data[18] << 16)) * 0.1)
   }
 }
 
 /** @type WeatherStation */
 let weatherStation
 
+async function open(device) {
+  if (!device) {
+    document.getElementById('btn-connect').disabled = false
+    return
+  }
+
+  if (!device.opened) {
+    await device.open()
+      .catch(console.error)
+  }
+
+  if (!device.opened) {
+    return
+  }
+  document.getElementById('btn-connect').disabled = true
+
+  weatherStation = new WeatherStation(device)
+
+  document.getElementById('btn-requestData').disabled = false
+  document.getElementById('btn-disconnect').disabled = false
+}
+
 async function connect() {
   if (!navigator.hid) {
-    console.log("USB is not available")
+    console.log("WebHID is not available")
   }
 
   const [device] = await navigator.hid.requestDevice({
@@ -149,17 +186,7 @@ async function connect() {
   })
     .catch(console.error)
 
-  if (!device) {
-    return;
-  }
-  console.log(device)
-
-  if (!device.opened) {
-    await device.open()
-      .catch(console.error)
-  }
-
-  weatherStation = new WeatherStation(device)
+  await open(device);
 }
 
 async function requestData() {
@@ -172,4 +199,19 @@ async function requestData() {
 async function disconnect() {
   await weatherStation.close()
   weatherStation = undefined
+
+  document.getElementById('btn-connect').disabled = false
+  document.getElementById('btn-requestData').disabled = true
+  document.getElementById('btn-disconnect').disabled = true
 }
+
+navigator.hid.getDevices()
+  .then(devices => {
+    for (const device of devices) {
+      if (device.productId === PRODUCT_ID && device.vendorId === VENDOR_ID) {
+        return device
+      }
+    }
+    return null
+  })
+  .then(device => open(device))
