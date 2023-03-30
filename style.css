@@ -1,0 +1,51 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 16px;
+  font-family: sans-serif;
+}
+
+header {
+  padding: 1.3em .5em;
+  background-color: #67ef63;
+  color: #292929;
+  text-align: center;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+nav a {
+  display: block;
+  padding: 1em .5em;
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+  text-align: center;
+  background-color: #ddd;
+}
+
+nav a:hover, nav a:focus, nav a.active {
+  background-color: #bbb;
+}
+
+nav a:visited {
+  color: #292929;
+}
+
+h2 {
+  text-align: center;
+  padding: .8em .5em .5em;
+}
+
+p {
+  padding: .5em;
+}
