@@ -2,7 +2,9 @@
   margin: 0;
   padding: 0;
   border: none;
+  background: none;
   box-sizing: border-box;
+  line-height: calc(1em + 1ex);
 }
 
 :root {
@@ -12,14 +14,18 @@
 
 header {
   padding: 1.3em .5em;
-  background-color: #67ef63;
+  background-color: #7be64d;
   color: #292929;
   text-align: center;
 }
 
+nav {
+  background-color: #ddd;
+}
+
 nav ul {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto;
   list-style: none;
 }
 
@@ -48,4 +54,30 @@ h2 {
 
 p {
   padding: .5em;
+}
+
+@media screen and (min-width: 40em) {
+  nav ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  nav li {
+    flex-grow: 1;
+  }
+
+  p {
+    padding: .5em 1em;
+  }
+}
+
+@media screen and (min-width: 55em) {
+  nav ul {
+    width: 55rem;
+    margin: 0 auto;
+  }
+
+  main {
+    width: 55rem;
+    margin: 0 auto;
+  }
 }
