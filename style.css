@@ -13,7 +13,7 @@
   font-family: sans-serif;
 }
 
-header {
+.page__header {
   padding: 1.3em .5em;
   background: linear-gradient(to bottom, #92de74, #68b046);
   color: #292929;
@@ -77,27 +77,30 @@ main ul {
 }
 
 main details {
-  border: 1px solid #777;
-  border-radius: 5px;
-  padding: 0 .4em;
   margin: .5rem;
 }
 
-main details[open] {
-  padding-bottom: .2em;
-}
-
 main summary {
-  margin: 0 -.4em;
-  padding: .2em .4em;
+  padding: .4em .4em;
   background: linear-gradient(to bottom, #ddd, #c0c0c0);
+  border-radius: 7px 7px 0 0;
   color: #222;
   font-weight: 500;
 }
 
-main details[open] > summary {
-  border-bottom: 1px solid #777;
-  margin-bottom: .4em;
+main details[open] > .details__full {
+  border-left: 1px solid #c0c0c0;
+  border-bottom: 1px solid #c0c0c0;
+  border-right: 1px solid #c0c0c0;
+  border-radius: 0 0 7px 7px;
+  padding: .2em .4em;
+}
+
+.weather-container {
+  border: 1px solid #777;
+  border-radius: 5px;
+  margin: .5rem;
+  padding: .4em
 }
 
 @media screen and (min-width: 40em) {
@@ -118,6 +121,10 @@ main details[open] > summary {
   }
 
   main details {
+    margin: .5rem 1rem;
+  }
+
+  .weather-container {
     margin: .5rem 1rem;
   }
 }

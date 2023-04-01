@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
+<header class="page__header">
   <h1>USB Weather</h1>
 </header>
 <nav>
@@ -20,17 +20,21 @@
   </ul>
 </nav>
 <main>
-  <h2>About</h2>
-  <h3>Information according to § 5 TMG</h3>
-  <p>
-  {{ADDRESS}}
-  </p>
+  <article>
+    <header>
+      <h2>About</h2>
+    </header>
+    <h3>Information according to § 5 TMG</h3>
+    <p>
+    {{ADDRESS}}
+    </p>
 
-  <h3>Contact</h3>
-  <p>Email: {{EMAIL}}</p>
+    <h3>Contact</h3>
+    <p>Email: {{EMAIL}}</p>
 
-  <h3>Data protection</h3>
-  <p>The creator of this website does not gather any data. There is no third party code used in this website and this website does not use any cookies.</p>
+    <h3>Data protection</h3>
+    <p>The creator of this website does not gather any data. There is no third party code used in this website and this website does not use any cookies.</p>
+  </article>
 </main>
 </body>
 </html>
