@@ -21,13 +21,15 @@
   </ul>
 </nav>
 <main>
-  <h2>Weather Data</h2>
-  <button id="btn-connect" onclick="connect()" disabled>Connect</button>
-  <button id="btn-request-data" onclick="requestData()" disabled>Request Data</button>
-  <button id="btn-disconnect" onclick="disconnect()" disabled>Disconnect</button>
-  <div>
-    <input type="checkbox" id="chk-auto-refresh" onchange="changeAutoRefresh()" disabled> auto refresh (30s)
-  </div>
+  <section class="controls">
+    <header><h2>Weather Data</h2></header>
+    <button id="btn-connect" onclick="connect()" disabled>Connect</button>
+    <button id="btn-request-data" onclick="requestData()" disabled>Request Data</button>
+    <button id="btn-disconnect" onclick="disconnect()" disabled>Disconnect</button>
+    <div>
+      <input type="checkbox" id="chk-auto-refresh" onchange="changeAutoRefresh()" disabled> auto refresh (30s)
+    </div>
+  </section>
   <section class="display">
     <header class="display__title"><h4>Air pressure</h4></header>
     <span id="air-pressure" class="display__value">--</span>

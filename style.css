@@ -21,7 +21,7 @@
 }
 
 nav {
-  background: linear-gradient(to bottom, #ddd, #c0c0c0);
+  background: linear-gradient(to bottom, #eee, #d0d0d0);
 }
 
 nav ul {
@@ -30,7 +30,7 @@ nav ul {
   row-gap: 1px;
   column-gap: 1px;
   list-style: none;
-  background-color: #777;
+  background-color: #999;
 }
 
 nav a {
@@ -43,15 +43,15 @@ nav a {
   font-weight: 500;
   text-align: center;
   box-shadow: inset 0 0 3px 0 #898989;
-  background: linear-gradient(to bottom, #ccc, #b0b0b0);
+  background: linear-gradient(to bottom, #ddd, #c0c0c0);
 }
 
 nav a.active {
-  background: linear-gradient(to bottom, #bbb, #a0a0a0);
+  background: linear-gradient(to bottom, #ccc, #b0b0b0);
 }
 
 nav a:hover, nav a:focus {
-  background: linear-gradient(to bottom, #aaa, #909090);
+  background: linear-gradient(to bottom, #bbb, #a0a0a0);
   text-decoration: underline;
 }
 
@@ -86,16 +86,16 @@ main details {
 
 main summary {
   padding: .4em .4em;
-  background: linear-gradient(to bottom, #ddd, #c0c0c0);
+  background: linear-gradient(to bottom, #eee, #d0d0d0);
   border-radius: 7px 7px 0 0;
   color: #222;
   font-weight: 500;
 }
 
 main details[open] > .details__full {
-  border-left: 1px solid #c0c0c0;
-  border-bottom: 1px solid #c0c0c0;
-  border-right: 1px solid #c0c0c0;
+  border-left: 1px solid #d0d0d0;
+  border-bottom: 1px solid #d0d0d0;
+  border-right: 1px solid #d0d0d0;
   border-radius: 0 0 7px 7px;
   padding: .2em .4em;
 }
@@ -106,7 +106,7 @@ main details[open] > .details__full {
   grid-template-columns: 1fr 1fr;
   row-gap: .1em;
   column-gap: .2em;
-  border: 1px solid #c0c0c0;
+  border: 1px solid #d0d0d0;
   border-radius: 7px;
   padding: .4em .8em;
   margin: 0 auto .5rem;
@@ -132,6 +132,7 @@ main details[open] > .details__full {
 
 .display__unit {
   grid-area: unit;
+  margin-top: .3em;
   font-weight: 300;
   font-style: italic;
   font-size: .9em;
