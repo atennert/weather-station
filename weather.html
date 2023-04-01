@@ -21,8 +21,9 @@
   </ul>
 </nav>
 <main>
+  <header><h2>Weather Data</h2></header>
+  <p class="warn warn__hid-not-available">This browser doesn't support WebHID. You may need to update it or use a different browser to access your weather station.</p>
   <section class="controls">
-    <header><h2>Weather Data</h2></header>
     <button id="btn-connect" onclick="connect()" disabled>Connect</button>
     <button id="btn-request-data" onclick="requestData()" disabled>Request Data</button>
     <button id="btn-disconnect" onclick="disconnect()" disabled>Disconnect</button>
@@ -81,11 +82,6 @@
   <section class="display">
     <header class="display__title"><h4>Wind speed</h4></header>
     <span id="wind-speed" class="display__value">--</span>
-    <span class="display__unit">km/h</span>
-  </section>
-  <section class="display">
-    <header class="display__title"><h4>Wind gust</h4></header>
-    <span id="wind-gust" class="display__value">--</span>
     <span class="display__unit">km/h</span>
   </section>
 </main>

@@ -177,7 +177,6 @@ function updateUI(weatherData) {
   document.getElementById('wind-direction-compass').textContent = weatherData.windDirectionCompass
   document.getElementById('wind-direction-degrees').textContent = weatherData.windDirectionDegrees
   document.getElementById('wind-speed').textContent = weatherData.windSpeedKilometersPerHour
-  document.getElementById('wind-gust').textContent = weatherData.windGustKilometersPerHour
 }
 
 /** @type WeatherStation */
@@ -209,6 +208,7 @@ async function open(device) {
 async function connect() {
   if (!navigator.hid) {
     console.log("WebHID is not available")
+    return
   }
 
   const [device] = await navigator.hid.requestDevice({
@@ -251,13 +251,19 @@ async function disconnect() {
   document.getElementById('chk-auto-refresh').disabled = true
 }
 
-navigator.hid.getDevices()
-  .then(devices => {
-    for (const device of devices) {
-      if (device.productId === PRODUCT_ID && device.vendorId === VENDOR_ID) {
-        return device
+if (!navigator.hid) {
+  document.querySelector('.warn__hid-not-available').style.display = 'block';
+  document.querySelector('.controls').style.display = 'none';
+} else {
+  navigator.hid.getDevices()
+    .then(devices => {
+      for (const device of devices) {
+        if (device.productId === PRODUCT_ID && device.vendorId === VENDOR_ID) {
+          return device
+        }
       }
-    }
-    return null
-  })
-  .then(device => open(device))
+      return null
+    })
+    .then(device => open(device))
+}
+

@@ -11,12 +11,12 @@
 :root {
   font-size: 16px;
   font-family: sans-serif;
+  color: #292929;
 }
 
 .page__header {
   padding: 1.3em .5em;
   background: linear-gradient(to bottom, #92de74, #68b046);
-  color: #292929;
   text-align: center;
 }
 
@@ -37,17 +37,19 @@ nav a {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3.5em;
+  height: 3.5rem;
   text-decoration: none;
-  color: #222;
   font-weight: 500;
   text-align: center;
   box-shadow: inset 0 0 3px 0 #898989;
   background: linear-gradient(to bottom, #ddd, #c0c0c0);
+  color: #292929;
 }
 
 nav a.active {
   background: linear-gradient(to bottom, #ccc, #b0b0b0);
+  font-weight: 600;
+  font-size: 1.1em;
 }
 
 nav a:hover, nav a:focus {
@@ -56,7 +58,7 @@ nav a:hover, nav a:focus {
 }
 
 nav a:visited {
-  color: #222;
+  color: #292929;
 }
 
 main {
@@ -88,7 +90,6 @@ main summary {
   padding: .4em .4em;
   background: linear-gradient(to bottom, #eee, #d0d0d0);
   border-radius: 7px 7px 0 0;
-  color: #222;
   font-weight: 500;
 }
 
@@ -98,6 +99,12 @@ main details[open] > .details__full {
   border-right: 1px solid #d0d0d0;
   border-radius: 0 0 7px 7px;
   padding: .2em .4em;
+}
+
+.warn {
+  display: none;
+  color: #811;
+  font-weight: 500;
 }
 
 .display {
