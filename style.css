@@ -59,25 +59,29 @@ nav a:visited {
   color: #222;
 }
 
+main {
+  padding: 0 .5rem;
+}
+
 h2 {
   text-align: center;
-  padding: .8em .5rem .5em;
+  padding: .8em 0 .5em;
 }
 
 h3 {
-  padding: .8em .5rem .5em;
+  padding: .8em 0 .5em;
 }
 
 p {
-  padding: .5rem;
+  padding: .5rem .3rem;
 }
 
 main ul {
-  padding: .5rem .5rem .5rem 2rem;
+  padding: .5rem 0 .5rem 1.5rem;
 }
 
 main details {
-  margin: .5rem;
+  margin: .5rem .3rem;
 }
 
 main summary {
@@ -96,14 +100,44 @@ main details[open] > .details__full {
   padding: .2em .4em;
 }
 
-.weather-container {
-  border: 1px solid #777;
-  border-radius: 5px;
-  margin: .5rem;
-  padding: .4em
+.display {
+  display: grid;
+  grid-template-areas: 'title title' 'value unit';
+  grid-template-columns: 1fr 1fr;
+  row-gap: .1em;
+  column-gap: .2em;
+  border: 1px solid #c0c0c0;
+  border-radius: 7px;
+  padding: .4em .8em;
+  margin: 0 auto .5rem;
+  max-width: 12em;
 }
 
-@media screen and (min-width: 40em) {
+.display__title {
+  grid-area: title;
+}
+
+.display__title > h4 {
+  font-weight: 300;
+  font-style: italic;
+  font-size: .8em;
+}
+
+.display__value {
+  grid-area: value;
+  justify-self: end;
+  font-weight: 500;
+  font-size: 1.3em;
+}
+
+.display__unit {
+  grid-area: unit;
+  font-weight: 300;
+  font-style: italic;
+  font-size: .9em;
+}
+
+@media screen and (min-width: 40rem) {
   nav ul {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -112,24 +146,24 @@ main details[open] > .details__full {
     flex-grow: 1;
   }
 
+  main {
+    padding: 0 .7rem;
+  }
+
   h3 {
-    padding: .8em .7rem .5em;
+    padding: .8em 0 .5em;
   }
 
   p {
-    padding: .5rem 1rem;
+    padding: .5rem .3rem;
   }
 
   main details {
-    margin: .5rem 1rem;
-  }
-
-  .weather-container {
-    margin: .5rem 1rem;
+    margin: .5rem .3rem;
   }
 }
 
-@media screen and (min-width: 55em) {
+@media screen and (min-width: 55rem) {
   nav ul {
     width: 55rem;
     margin: 0 auto;

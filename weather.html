@@ -28,18 +28,64 @@
   <div>
     <input type="checkbox" id="chk-auto-refresh" onchange="changeAutoRefresh()" disabled> auto refresh (30s)
   </div>
-  <div><span id="air-pressure">--</span> hPa</div>
-  <div><span id="illumination">--</span> lux</div>
-  <div><span id="inside-humidity">--</span> %</div>
-  <div><span id="outside-humidity">--</span> %</div>
-  <div><span id="inside-temperature">--</span> °C</div>
-  <div><span id="outside-temperature">--</span> °C</div>
-  <div><span id="rain">--</span> mm</div>
-  <div><span id="uv-level">--</span></div>
-  <div><span id="wind-direction-compass">--</span></div>
-  <div><span id="wind-direction-degrees">--</span> °</div>
-  <div><span id="wind-speed">--</span> km/h</div>
-  <div><span id="wind-gust">--</span> km/h</div>
+  <section class="display">
+    <header class="display__title"><h4>Air pressure</h4></header>
+    <span id="air-pressure" class="display__value">--</span>
+    <span class="display__unit">hPa</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Illumination</h4></header>
+    <span id="illumination" class="display__value">--</span>
+    <span class="display__unit">lux</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Humidity (in)</h4></header>
+    <span id="inside-humidity" class="display__value">--</span>
+    <span class="display__unit">%</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Humidity (out)</h4></header>
+    <span id="outside-humidity" class="display__value">--</span>
+    <span class="display__unit">%</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Temperature (in)</h4></header>
+    <span id="inside-temperature" class="display__value">--</span>
+    <span class="display__unit">°C</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Temperature (out)</h4></header>
+    <span id="outside-temperature" class="display__value">--</span>
+    <span class="display__unit">°C</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Rain</h4></header>
+    <span id="rain" class="display__value">--</span>
+    <span class="display__unit">mm</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>UV level</h4></header>
+    <span id="uv-level" class="display__value">--</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Wind direction</h4></header>
+    <span id="wind-direction-compass" class="display__value">--</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Wind direction</h4></header>
+    <span id="wind-direction-degrees" class="display__value">--</span>
+    <span class="display__unit">°</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Wind speed</h4></header>
+    <span id="wind-speed" class="display__value">--</span>
+    <span class="display__unit">km/h</span>
+  </section>
+  <section class="display">
+    <header class="display__title"><h4>Wind gust</h4></header>
+    <span id="wind-gust" class="display__value">--</span>
+    <span class="display__unit">km/h</span>
+  </section>
 </main>
 <script src="weather.js"></script>
 </body>
