@@ -174,9 +174,12 @@ function updateUI(weatherData) {
   document.getElementById('outside-temperature').textContent = weatherData.outsideTemperatureCelsius
   document.getElementById('rain').textContent = weatherData.rainMillimeter
   document.getElementById('uv-level').textContent = weatherData.uvLevel
-  document.getElementById('wind-direction-compass').textContent = weatherData.windDirectionCompass
-  document.getElementById('wind-direction-degrees').textContent = weatherData.windDirectionDegrees
-  document.getElementById('wind-speed').textContent = weatherData.windSpeedKilometersPerHour
+  document.getElementById('wind-speed').textContent = weatherData.windSpeedKilometersPerHour.toFixed(1)
+  document.querySelectorAll('polygon')
+    .forEach(p => p.classList.remove('current-direction'))
+  document.getElementById(`p${weatherData.windDirectionDegrees}`).classList.add('current-direction')
+  document.getElementById('windDescription').textContent =
+    `The current wind direction is ${weatherData.windDirectionCompass} with a speed of ${weatherData.windSpeedKilometersPerHour.toFixed(1)} km/h.`
 }
 
 /** @type WeatherStation */

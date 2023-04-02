@@ -107,6 +107,112 @@ main details[open] > .details__full {
   font-weight: 500;
 }
 
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .5rem;
+}
+
+button {
+  width: 70%;
+  height: 50px;
+  border-width: 1px;
+  color: #292929;
+  border-color: #4b8f29;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: sans-serif;
+  border-radius: 7px;
+  box-shadow: 0 10px 14px -7px #3e7327;
+  background: linear-gradient(to bottom, #92de74, #68b046);
+}
+
+button:hover {
+  background: linear-gradient(#72b352, #77b55a);
+}
+
+button:disabled {
+  background: linear-gradient(to bottom, #92a98e, #6e935d);
+  color: #555;
+}
+
+.auto-refresh__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: .5rem;
+  gap: .3em;
+}
+
+.switch__input {
+  position: absolute;
+  width: 0 !important;
+}
+
+.switch__elem {
+  display: inline-block;
+  --size: 1em;
+  --width: calc(var(--size) * 2.3);
+  --height: calc(var(--size) * 1.2);
+  --half-height: calc(var(--height) / 2);
+  position: relative;
+  width: var(--width);
+  height: var(--height);
+  background: none;
+  border-radius: var(--half-height);
+  overflow: hidden;
+  box-shadow: inset calc(var(--size) * .03) calc(var(--size) * .03) calc(var(--size) * .15) #111;
+}
+
+.switch__button {
+  position: absolute;
+  width: var(--height);
+  height: var(--height);
+  background-color: #444;
+  border-radius: 50%;
+  transform: translatex(0);
+  transition: transform .1s linear;
+  box-shadow: inset calc(var(--size) * -.015) calc(var(--size) * -.015) calc(var(--size) * .08) calc(var(--size) * .02) #111;
+}
+
+.switch__elem::before,
+.switch__elem::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  transform: translatex(0);
+  transition: transform .1s linear;
+  width: calc(var(--width) - var(--half-height));
+}
+
+.switch__elem::before {
+  background-color: #92de74;
+  left: calc(var(--height) - var(--width));
+  padding-right: var(--half-height);
+}
+
+.switch__elem::after {
+  background-color: #777;
+  left: var(--half-height);
+  padding-left: var(--half-height);
+}
+
+.switch__input:checked + .switch__elem > .switch__button,
+.switch__input:checked + .switch__elem::before,
+.switch__input:checked + .switch__elem::after {
+  transform: translatex(calc(var(--width) - var(--height)));
+}
+
+.switch__input:checked + .switch__elem > .switch__button {
+  background-color: #68b046;
+}
+
 .display {
   display: grid;
   grid-template-areas: 'title title' 'value unit';
@@ -143,6 +249,51 @@ main details[open] > .details__full {
   font-weight: 300;
   font-style: italic;
   font-size: .9em;
+}
+
+.display__wind {
+  grid-template-areas: 'title title' 'image image';
+}
+
+.wind__img {
+  grid-area: image;
+}
+
+polygon {
+  stroke-width: 1;
+  stroke: #fff;
+  fill: #444;
+}
+
+polygon.current-direction {
+  stroke: #444;
+  fill: #92de74;
+}
+
+ellipse {
+  stroke-width: 1;
+  stroke: #ccc;
+  fill: none;
+}
+
+text {
+  font-family: sans-serif;
+  font-size: .65em;
+  font-weight: 300;
+  font-style: italic;
+  stroke-width: 0;
+  fill: #444;
+}
+
+text.display__value {
+  font-style: normal;
+  font-size: .8em;
+  fill: #292929;
+}
+
+text.display__unit {
+  font-size: .6em;
+  fill: #292929;
 }
 
 @media screen and (min-width: 40rem) {

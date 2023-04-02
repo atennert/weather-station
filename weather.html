@@ -10,7 +10,7 @@
 </head>
 <body>
 <header class="page__header">
-  <h1>USB Weather</h1>
+  <h1>HID Weather</h1>
 </header>
 <nav>
   <ul>
@@ -24,11 +24,17 @@
   <header><h2>Weather Data</h2></header>
   <p class="warn warn__hid-not-available">This browser doesn't support WebHID. You may need to update it or use a different browser to access your weather station.</p>
   <section class="controls">
-    <button id="btn-connect" onclick="connect()" disabled>Connect</button>
-    <button id="btn-request-data" onclick="requestData()" disabled>Request Data</button>
-    <button id="btn-disconnect" onclick="disconnect()" disabled>Disconnect</button>
-    <div>
-      <input type="checkbox" id="chk-auto-refresh" onchange="changeAutoRefresh()" disabled> auto refresh (30s)
+    <div class="buttons">
+      <button id="btn-connect" onclick="connect()" disabled>Connect</button>
+      <button id="btn-request-data" onclick="requestData()" disabled>Request Data</button>
+      <button id="btn-disconnect" onclick="disconnect()" disabled>Disconnect</button>
+    </div>
+    <div class="auto-refresh__container">
+      <input class="switch__input" id="chk-auto-refresh" type="checkbox" name="check" onchange="changeAutoRefresh()" disabled>
+      <label class="switch__elem" for="chk-auto-refresh">
+        <div class="switch__button"></div>
+      </label>
+      <label for="chk-auto-refresh">auto refresh (30s)</label>
     </div>
   </section>
   <section class="display">
@@ -70,19 +76,44 @@
     <header class="display__title"><h4>UV level</h4></header>
     <span id="uv-level" class="display__value">--</span>
   </section>
-  <section class="display">
-    <header class="display__title"><h4>Wind direction</h4></header>
-    <span id="wind-direction-compass" class="display__value">--</span>
-  </section>
-  <section class="display">
-    <header class="display__title"><h4>Wind direction</h4></header>
-    <span id="wind-direction-degrees" class="display__value">--</span>
-    <span class="display__unit">°</span>
-  </section>
-  <section class="display">
-    <header class="display__title"><h4>Wind speed</h4></header>
-    <span id="wind-speed" class="display__value">--</span>
-    <span class="display__unit">km/h</span>
+  <section class="display display__wind">
+    <header class="display__title"><h4>Wind</h4></header>
+    <svg class="wind__img" viewBox="0 0 100 70" role="img" aria-labelledby="windDescription">
+      <desc id="windDescription">No current wind data.</desc>
+
+      <ellipse cx="50" cy="35" rx="32" ry="17"/>
+
+      <polygon id="p0" points="50,14 52.5,20 47.5,20"/>
+      <text x="49.3" y="11" dominant-baseline="auto" text-anchor="middle">N</text>
+
+      <polygon id="p23" points="62.34,15.1 61.4,21 56.5,20.3"/>
+      <polygon id="p45" points="74,19.26 70.6,24.1 65.5,22.2"/>
+      <polygon id="p68" points="83.5,25.64 78.4,29.5 74.7,26.2"/>
+
+      <polygon id="p90" points="86,35 80,37.5 80,32.5"/>
+      <text x="89" y="35" dominant-baseline="central" text-anchor="start">E</text>
+
+      <polygon id="p113" points="83.5,44.36 78.4,40.5 74.7,43.8"/>
+      <polygon id="p135" points="74,50.74 70.6,45.9 65.5,47.8"/>
+      <polygon id="p158" points="62.34,54.9 61.4,49 56.5,49.7"/>
+
+      <polygon id="p180" points="50,56 52.5,50 47.5,50"/>
+      <text x="49.3" y="59" dominant-baseline="hanging" text-anchor="middle">S</text>
+
+      <polygon id="p203" points="37.66,54.9 38.6,49 43.5,49.7"/>
+      <polygon id="p225" points="26,50.74 29.4,45.9 34.5,47.8"/>
+      <polygon id="p248" points="16.5,44.36 21.6,40.5 25.3,43.8"/>
+
+      <polygon id="p270" points="14,35 20,37.5 20,32.5"/>
+      <text x="11" y="35" dominant-baseline="central" text-anchor="end">W</text>
+
+      <polygon id="p293" points="16.5,25.64 21.6,29.5 25.3,26.2"/>
+      <polygon id="p315" points="26,19.26 29.4,24.1 34.5,22.2"/>
+      <polygon id="p338" points="37.66,15.1 38.6,21 43.5,20.3"/>
+
+      <text id="wind-speed" class="display__value" x="54.5" y="35" dominant-baseline="central" text-anchor="end">--</text>
+      <text class="display__unit" x="55.5" y="34" dominant-baseline="central" text-anchor="start">km/h</text>
+    </svg>
   </section>
 </main>
 <script src="weather.js"></script>
