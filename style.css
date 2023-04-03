@@ -118,6 +118,10 @@ main a, main a:visited {
   color: #3e7327;
 }
 
+section.weather {
+  text-align: center;
+}
+
 .warn {
   display: none;
   color: #811;
@@ -135,7 +139,7 @@ main a, main a:visited {
 
 button {
   width: 70%;
-  height: 50px;
+  height: 2.5em;
   border-width: 1px;
   color: #292929;
   border-color: #4b8f29;
@@ -262,6 +266,7 @@ button:disabled {
 
 .display__unit {
   grid-area: unit;
+  justify-self: start;
   margin-top: .3em;
   font-weight: 300;
   font-style: italic;
@@ -313,6 +318,62 @@ text.display__unit {
   fill: #292929;
 }
 
+@media screen and (min-width: 30rem) {
+  .display__container {
+    display: grid;
+    grid-template-areas:
+      'temp-in  temp-out'
+      'hum-in   hum-out'
+      'pressure rain'
+      'wind     illum'
+      'wind     uv';
+    justify-content: center;
+    column-gap: .5rem;
+    row-gap: .5rem;
+  }
+
+  .display {
+    width: 12em;
+    margin: 0;
+  }
+
+  .display__temp-in {
+    grid-area: temp-in;
+  }
+
+  .display__temp-out {
+    grid-area: temp-out;
+  }
+
+  .display__hum-in {
+    grid-area: hum-in;
+  }
+
+  .display__hum-out {
+    grid-area: hum-out;
+  }
+
+  .display__pressure {
+    grid-area: pressure;
+  }
+
+  .display__rain {
+    grid-area: rain;
+  }
+
+  .display__illum {
+    grid-area: illum;
+  }
+
+  .display__uv {
+    grid-area: uv;
+  }
+
+  .display__wind {
+    grid-area: wind;
+  }
+}
+
 @media screen and (min-width: 40rem) {
   nav ul {
     grid-template-columns: repeat(4, 1fr);
@@ -336,6 +397,22 @@ text.display__unit {
 
   main details {
     margin: .5rem .3rem;
+  }
+
+  .buttons {
+    flex-direction: row;
+  }
+
+  button {
+    width: 28%;
+  }
+
+  .display__container {
+    grid-template-areas:
+      'temp-in  temp-out pressure'
+      'hum-in   hum-out  rain'
+      'illum    wind     uv'
+      '.        wind     .';
   }
 }
 
