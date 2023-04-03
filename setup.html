@@ -31,11 +31,21 @@
       <li>USB cable to connect the display unit to the computer</li>
     </ul>
 
+    <h3>Browser</h3>
+    <p>You need a browser that supports the WebHID API. <a target="_blank" rel="nofollow noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/WebHID_API#browser_compatibility">You can check the compatibility table</a>.</p>
+
     <h3>Configure operating system</h3>
-    <details>
+    <details id="linux-config">
       <summary>Linux</summary>
       <div class="details__full">
-        I don't know
+        <p>In order to access the weather station, you need to make it available for your user as a USB and HID device. If you don't and  try to connect to the device with the browser, the process of connecting will fail.</p>
+
+        <p>We can make the weather station available to the browser by creating a udev rule. Create the file <em>/etc/udev/rules.d/99-weatherstation.rules</em> and add the following content to it. You will need root user rights to do so (use <em>sudo</em>).</p>
+
+        <pre><code>SUBSYSTEM=="usb", ATTRS{idVendor}=="1941", ATTRS{idProduct}=="8021", MODE="0666"
+KERNEL=="hidraw*", ATTRS{idVendor}=="1941", ATTRS{idProduct}=="8021", MODE="0664", GROUP="plugdev"</code></pre>
+
+        <p>This rule will ensure that devices with the product ID 8021 and vendor ID 1941 (the weather station) will be available as a USB device to all users and as a HID device to all members of the plugdev group. Make sure you are a member of the plugdev group or adjust the mode to your liking.</p>
       </div>
     </details>
     <details>
@@ -46,5 +56,10 @@
     </details>
   </article>
 </main>
+<script>
+  if (navigator.userAgent.includes('Linux')) {
+    document.getElementById('linux-config').open = true
+  }
+</script>
 </body>
 </html>

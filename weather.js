@@ -251,6 +251,7 @@ async function disconnect() {
   document.getElementById('btn-connect').disabled = false
   document.getElementById('btn-request-data').disabled = true
   document.getElementById('btn-disconnect').disabled = true
+  document.getElementById('chk-auto-refresh').checked = false
   document.getElementById('chk-auto-refresh').disabled = true
 }
 
