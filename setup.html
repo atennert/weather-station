@@ -48,7 +48,7 @@ KERNEL=="hidraw*", ATTRS{idVendor}=="1941", ATTRS{idProduct}=="8021", MODE="0664
         <p>This rule will ensure that devices with the product ID 8021 and vendor ID 1941 (the weather station) will be available as a USB device to all users and as a HID device to all members of the plugdev group. Make sure you are a member of the plugdev group or adjust the mode to your liking.</p>
       </div>
     </details>
-    <details>
+    <details id="other-config">
       <summary>Other</summary>
       <div class="details__full">
         I don't know if something is necessary. If you do, please email me.
@@ -59,6 +59,8 @@ KERNEL=="hidraw*", ATTRS{idVendor}=="1941", ATTRS{idProduct}=="8021", MODE="0664
 <script>
   if (navigator.userAgent.includes('Linux')) {
     document.getElementById('linux-config').open = true
+  } else {
+    document.getElementById('other-config').open = true
   }
 </script>
 </body>
