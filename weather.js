@@ -5,6 +5,8 @@ const INTERFACE = 0
 const MAX_READ_TRIES = 3
 const READ_BUFFER_SIZE = 32
 const MESSAGE_SIZE = 8
+const WS_ENTRY_SIZE = 0x14
+const MAX_WS_ENTRY_COUNT = 3264
 
 const WS_ALL_ADDRESS = 0
 const WS_PERIOD_ADDRESS = 16
@@ -110,6 +112,7 @@ class WeatherStation {
 
 /**
  * @param {Array<number>} data
+ * @param {Array<number>} data60Min
  * @return {{
  * windDirectionCompass: string,
  * outsideTemperatureCelsius: number,
@@ -122,13 +125,13 @@ class WeatherStation {
  * insideHumidityPercent: number,
  * airPressureHectoPascal: number,
  * insideTemperatureCelsius: number,
- * age: number,
- * rainMillimeter: number
+ * ageMinutes: number,
+ * rainMillimeter1h: number
  * }}
  */
-function interpretWeatherData(data) {
+function interpretWeatherData(data, data60Min) {
   return {
-    age: data[0],
+    ageMinutes: data[0],
     insideTemperatureCelsius: data[0x03] >= 0x80
       ? (data[0x02] + (data[0x03] << 8) ^ 0x7FFF) / 10
       : (data[0x02] + (data[0x03] << 8) ^ 0x0000) / 10,
@@ -142,7 +145,7 @@ function interpretWeatherData(data) {
     windDirectionDegrees: directionsDeg[data[0x0C] < directionsDeg.length ? data[0x0C] : 0],
     windDirectionCompass: directions[data[0x0C] < directions.length ? data[0x0C] : 0],
     airPressureHectoPascal: (data[0x07] + (data[0x08] << 8)) / 10,
-    rainMillimeter: (data[0x0D] + (data[0x0E] << 8)) * 0.3,
+    rainMillimeter1h: ((data[0x0D] + (data[0x0E] << 8)) - (data60Min[0x0D] + (data60Min[0x0E] << 8))) * 0.3,
     uvLevel: data[19],
     illuminationLux: Math.floor((data[16] + (data[17] << 8) + (data[18] << 16)) * 0.1)
   }
@@ -161,8 +164,8 @@ function interpretWeatherData(data) {
  * insideHumidityPercent: number,
  * airPressureHectoPascal: number,
  * insideTemperatureCelsius: number,
- * age: number,
- * rainMillimeter: number
+ * ageMinutes: number,
+ * rainMillimeter1h: number
  * }} weatherData
  */
 function updateUI(weatherData) {
@@ -172,7 +175,7 @@ function updateUI(weatherData) {
   document.getElementById('outside-humidity').textContent = weatherData.outsideHumidityPercent
   document.getElementById('inside-temperature').textContent = weatherData.insideTemperatureCelsius
   document.getElementById('outside-temperature').textContent = weatherData.outsideTemperatureCelsius
-  document.getElementById('rain').textContent = weatherData.rainMillimeter
+  document.getElementById('rain').textContent = weatherData.rainMillimeter1h
   document.getElementById('uv-level').textContent = weatherData.uvLevel
   document.getElementById('wind-speed').textContent = weatherData.windSpeedKilometersPerHour.toFixed(1)
   document.querySelectorAll('polygon')
@@ -225,11 +228,31 @@ async function connect() {
   await open(device);
 }
 
-async function requestData() {
-  const currentDataAddress = await weatherStation.readData(WS_CURRENT_POSITION_ADDRESS, 2)
-  const data2 = await weatherStation.readData(currentDataAddress[0] + currentDataAddress[1] * 256, 0x14)
+function get60MinutesAgoAddress(lastAgeMinutes, readPeriodMinutes, dataCount, currentDataAddress) {
+  let position60Min = Math.round((60 - lastAgeMinutes) / readPeriodMinutes)
+  if (dataCount <= position60Min) {
+    position60Min = dataCount - 1
+  }
+  let address60Min = currentDataAddress - position60Min * WS_ENTRY_SIZE
 
-  updateUI(interpretWeatherData(data2))
+  if (address60Min < WS_ALL_ADDRESS) {
+    address60Min += MAX_WS_ENTRY_COUNT * WS_ENTRY_SIZE
+  }
+  return address60Min;
+}
+
+async function requestData() {
+  const [readPeriodMinutes] = await weatherStation.readData(WS_PERIOD_ADDRESS, WS_PERIOD_SIZE)
+  const dataCount = await weatherStation.readData(WS_DATA_COUNT_ADDRESS, WS_DATA_COUNT_SIZE)
+    .then(([dc1, dc2]) => dc1 + dc2 * 256)
+  const currentDataAddress = await weatherStation.readData(WS_CURRENT_POSITION_ADDRESS, WS_CURRENT_POSITION_SIZE)
+    .then(address => address[0] + address[1] * 256)
+  const data = await weatherStation.readData(currentDataAddress, WS_ENTRY_SIZE)
+  const lastAgeMinutes = data[0]
+  const address60Min = get60MinutesAgoAddress(lastAgeMinutes, readPeriodMinutes, dataCount, currentDataAddress);
+  const data60Min = await weatherStation.readData(address60Min, WS_ENTRY_SIZE)
+
+  updateUI(interpretWeatherData(data, data60Min))
 }
 
 /** @type number */
