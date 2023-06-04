@@ -33,7 +33,7 @@ class WeatherStation {
    * @param {HIDDevice} device
    */
   constructor(device) {
-    this.device = device;
+    this.device = device
   }
 
   /**
@@ -48,7 +48,7 @@ class WeatherStation {
     const completeBuffer = []
 
     for (let i = 0; i < size; i += readSize) {
-      const data = await this.readDataPart(address + i, readSize);
+      const data = await this.readDataPart(address + i, readSize)
 
       completeBuffer.push(...data)
     }
@@ -70,7 +70,7 @@ class WeatherStation {
       (partAddress >> 8) & 0xff,
       partAddress & 0xff,
       READ_BUFFER_SIZE,
-    ];
+    ]
 
     const dataPromise = new Promise((resolve) => {
       let requiredBytes = READ_BUFFER_SIZE
@@ -90,18 +90,18 @@ class WeatherStation {
       }
 
       this.device.oninputreport = receiver
-    });
+    })
 
     await this.device.sendReport(0, new Uint8Array(message))
-    return await dataPromise;
+    return await dataPromise
   }
 
   async close() {
     if (!this.device) {
-      return;
+      return
     }
 
-    await this.device.close();
+    await this.device.close()
     if ("forget" in HIDDevice.prototype) {
       await this.device.forget()
     }
@@ -225,7 +225,7 @@ async function connect() {
   })
     .catch(console.error)
 
-  await open(device);
+  await open(device)
 }
 
 function get60MinutesAgoAddress(lastAgeMinutes, readPeriodMinutes, dataCount, currentDataAddress) {
@@ -238,7 +238,7 @@ function get60MinutesAgoAddress(lastAgeMinutes, readPeriodMinutes, dataCount, cu
   if (address60Min < WS_ALL_ADDRESS) {
     address60Min += MAX_WS_ENTRY_COUNT * WS_ENTRY_SIZE
   }
-  return address60Min;
+  return address60Min
 }
 
 async function requestData() {
@@ -249,7 +249,7 @@ async function requestData() {
     .then(address => address[0] + address[1] * 256)
   const data = await weatherStation.readData(currentDataAddress, WS_ENTRY_SIZE)
   const lastAgeMinutes = data[0]
-  const address60Min = get60MinutesAgoAddress(lastAgeMinutes, readPeriodMinutes, dataCount, currentDataAddress);
+  const address60Min = get60MinutesAgoAddress(lastAgeMinutes, readPeriodMinutes, dataCount, currentDataAddress)
   const data60Min = await weatherStation.readData(address60Min, WS_ENTRY_SIZE)
 
   updateUI(interpretWeatherData(data, data60Min))
@@ -279,8 +279,8 @@ async function disconnect() {
 }
 
 if (!navigator.hid) {
-  document.querySelector('.warn__hid-not-available').style.display = 'block';
-  document.querySelector('.controls').style.display = 'none';
+  document.querySelector('.warn__hid-not-available').style.display = 'block'
+  document.querySelector('.controls').style.display = 'none'
 } else {
   navigator.hid.getDevices()
     .then(devices => {
