@@ -47,7 +47,7 @@ class WeatherStation {
     /** @type Array<number> */
     const completeBuffer = []
 
-    for (let i = 0; i < size; i += readSize) {
+    for await (let i = 0; i < size; i += readSize) {
       const data = await this.readDataPart(address + i, readSize)
 
       completeBuffer.push(...data)
