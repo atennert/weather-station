@@ -192,6 +192,7 @@ button:disabled {
 
 .switch__button {
   position: absolute;
+  display: block;
   width: var(--height);
   height: var(--height);
   background-color: #444;
@@ -337,35 +338,35 @@ text.display__unit {
     margin: 0;
   }
 
-  .display__temp-in {
+  #inside-temperature {
     grid-area: temp-in;
   }
 
-  .display__temp-out {
+  #outside-temperature {
     grid-area: temp-out;
   }
 
-  .display__hum-in {
+  #inside-humidity {
     grid-area: hum-in;
   }
 
-  .display__hum-out {
+  #outside-humidity {
     grid-area: hum-out;
   }
 
-  .display__pressure {
+  #air-pressure {
     grid-area: pressure;
   }
 
-  .display__rain {
+  #rain {
     grid-area: rain;
   }
 
-  .display__illum {
+  #illumination {
     grid-area: illum;
   }
 
-  .display__uv {
+  #uv-level {
     grid-area: uv;
   }
 

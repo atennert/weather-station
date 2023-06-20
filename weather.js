@@ -169,14 +169,14 @@ function interpretWeatherData(data, data60Min) {
  * }} weatherData
  */
 function updateUI(weatherData) {
-  document.getElementById('air-pressure').textContent = weatherData.airPressureHectoPascal
-  document.getElementById('illumination').textContent = weatherData.illuminationLux
-  document.getElementById('inside-humidity').textContent = weatherData.insideHumidityPercent
-  document.getElementById('outside-humidity').textContent = weatherData.outsideHumidityPercent
-  document.getElementById('inside-temperature').textContent = weatherData.insideTemperatureCelsius
-  document.getElementById('outside-temperature').textContent = weatherData.outsideTemperatureCelsius
-  document.getElementById('rain').textContent = weatherData.rainMillimeter1h
-  document.getElementById('uv-level').textContent = weatherData.uvLevel
+  document.getElementById('air-pressure').value = weatherData.airPressureHectoPascal
+  document.getElementById('illumination').value = weatherData.illuminationLux
+  document.getElementById('inside-humidity').value = weatherData.insideHumidityPercent
+  document.getElementById('outside-humidity').value = weatherData.outsideHumidityPercent
+  document.getElementById('inside-temperature').value = weatherData.insideTemperatureCelsius
+  document.getElementById('outside-temperature').value = weatherData.outsideTemperatureCelsius
+  document.getElementById('rain').value = weatherData.rainMillimeter1h
+  document.getElementById('uv-level').value = weatherData.uvLevel
   document.getElementById('wind-speed').textContent = weatherData.windSpeedKilometersPerHour.toFixed(1)
   document.querySelectorAll('polygon')
     .forEach(p => p.classList.remove('current-direction'))

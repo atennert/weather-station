@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>USB Weather - Weather</title>
   <link rel="stylesheet" href="style.css">
-
+  <script src="./text-display.js" defer></script>
 </head>
 <body>
 <header class="page__header">
@@ -35,7 +35,7 @@
       <input class="switch__input" id="chk-auto-refresh" type="checkbox" name="check" onchange="changeAutoRefresh()"
              disabled>
       <label class="switch__elem" for="chk-auto-refresh" aria-hidden="true">
-        <div class="switch__button"></div>
+        <span class="switch__button"></span>
       </label>
       <label for="chk-auto-refresh">auto refresh (30s)</label>
     </div>
@@ -43,45 +43,14 @@
   <section class="weather">
     <header><h3>Display</h3></header>
     <div class="display__container">
-      <div class="display display__temp-in">
-        <header class="display__title"><h4>Temperature (in)</h4></header>
-        <span id="inside-temperature" class="display__value">--</span>
-        <span class="display__unit">°C</span>
-      </div>
-      <div class="display display__temp-out">
-        <header class="display__title"><h4>Temperature (out)</h4></header>
-        <span id="outside-temperature" class="display__value">--</span>
-        <span class="display__unit">°C</span>
-      </div>
-      <div class="display display__hum-in">
-        <header class="display__title"><h4>Humidity (in)</h4></header>
-        <span id="inside-humidity" class="display__value">--</span>
-        <span class="display__unit">%</span>
-      </div>
-      <div class="display display__hum-out">
-        <header class="display__title"><h4>Humidity (out)</h4></header>
-        <span id="outside-humidity" class="display__value">--</span>
-        <span class="display__unit">%</span>
-      </div>
-      <div class="display display__pressure">
-        <header class="display__title"><h4>Air pressure</h4></header>
-        <span id="air-pressure" class="display__value">--</span>
-        <span class="display__unit">hPa</span>
-      </div>
-      <div class="display display__rain">
-        <header class="display__title"><h4>Rain (1h)</h4></header>
-        <span id="rain" class="display__value">--</span>
-        <span class="display__unit">mm</span>
-      </div>
-      <div class="display display__illum">
-        <header class="display__title"><h4>Illumination</h4></header>
-        <span id="illumination" class="display__value">--</span>
-        <span class="display__unit">lux</span>
-      </div>
-      <div class="display display__uv">
-        <header class="display__title"><h4>UV level</h4></header>
-        <span id="uv-level" class="display__value">--</span>
-      </div>
+      <text-display id="inside-temperature" class="display" title="Temperature (in)" unit="°C"></text-display>
+      <text-display id="outside-temperature" class="display" title="Temperature (out)" unit="°C"></text-display>
+      <text-display id="inside-humidity" class="display" title="Humidity (in)" unit="%"></text-display>
+      <text-display id="outside-humidity" class="display" title="Humidity (out)" unit="%"></text-display>
+      <text-display id="air-pressure" class="display" title="Air pressure" unit="hPa"></text-display>
+      <text-display id="rain" class="display" title="Rain (1h)" unit="mm"></text-display>
+      <text-display id="illumination" class="display" title="Illumination" unit="lux"></text-display>
+      <text-display id="uv-level" class="display" title="UV level"></text-display>
       <div class="display display__wind">
         <header class="display__title"><h4>Wind</h4></header>
         <svg class="wind__img" viewBox="0 0 100 70" role="img" aria-labelledby="windDescription">
